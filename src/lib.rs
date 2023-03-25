@@ -16,11 +16,18 @@ pub fn can_construct_note(magazine: &[&str], note: &[&str]) -> bool {
     let mut result = true;
 
     for word in note {
-        if let Some(count) = word_count.get(word)
+        if let Some(count) = word_count.get_mut(word) {
+            if *count > 0 {
+                *count -= 1;
+            }
+            else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
-
-    println!("{:?}", word_count);
-    result
+    true
 }
 
 #[cfg(test)]
